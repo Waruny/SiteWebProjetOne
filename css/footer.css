@@ -1,0 +1,14 @@
+footer {
+    height: 40vh;
+    background-color: #232526;
+    color: #fafafa;
+    vertical-align: bottom;
+    display: table-cell;
+    width: 99vw;
+}
+
+.copyright {
+    padding-bottom: 2vh;
+    font-size: 20px;
+    text-align: center;
+}
