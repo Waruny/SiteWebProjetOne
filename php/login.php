@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="../img/logoIcon.png" />
-    <title>Connection</title>
+    <title>Connexion</title>
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <header>
