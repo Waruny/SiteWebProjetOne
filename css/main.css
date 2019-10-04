@@ -246,6 +246,28 @@ label {
     display: block;
 }
 
+.help-block {
+    color: red;
+    display: block;
+}
+
+.form-group {
+    margin-top: 3vh;
+}
+
+.form-group input {
+    width: 25%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type=submit]:hover {
+    background-color: #3695E8;
+}
+
 /* - - - - FOOTER - - - - */
 
 footer {
