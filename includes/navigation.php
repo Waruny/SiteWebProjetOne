@@ -12,7 +12,7 @@
             <ul>
                 <?php
 
-                try{
+                /*try{
                   $stmt = $db->prepare("SELECT * FROM categoriesproduit");
                   $stmt->execute();
                   foreach($stmt as $row){
@@ -23,7 +23,7 @@
                 }
                 catch(PDOException $e){
                   echo "Il y a un problème avec la connection: " . $e->getMessage();
-                }
+                }*/
 
               ?>
             </ul>
@@ -58,5 +58,5 @@
       <!--Bouton rechercher-->
       
       <?php include_once 'php/search-form.php';?>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Clear Cart</button>
-    
+      <a href="shopping-cart.php" class="shopping"><span class="total-count" style="font-size:11px; color:#159DFF;"></span><i class="fas fa-shopping-cart" style="font-size:2rem"></i></a>
+      <button class="clear-cart btn btn-danger">Clear Cart</button>

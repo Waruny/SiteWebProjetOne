@@ -63,7 +63,7 @@ $db = $pdo->open();
         </div>
         <?php $pdo->close(); ?>
     </div>
-    <?php include 'includes/scripts.php'; ?>
+    <?php include 'includes/scripts.js'; ?>
 <script>
 var total = 0;
 $(function(){
