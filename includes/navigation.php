@@ -58,4 +58,6 @@
       <!--Bouton rechercher-->
       
       <?php include_once 'php/search-form.php';?>
-      <a href="shopping-cart.php" class="shopping"><i class="fas fa-shopping-cart" style="font-size:2rem"></i></a>
+      <a href="shopping-cart.php" class="shopping" data-toggle="modal"><span class="total-count" style="font-size:11px; color:#159DFF;"></span><i class="fas fa-shopping-cart" data-toggle="modal" style="font-size:2rem"></i></a>
+      <button class="clear-cart btn btn-danger">Clear Cart</button>
+    
