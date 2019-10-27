@@ -17,7 +17,11 @@ $db = $pdo->open();
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/search-form.css">
     <link rel="icon" type="image/png" href="img/logoIcon.png" />
-    <title>Accueil Projet One</title> 
+	<title>Accueil Projet One</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   </head>
   
 <body>
@@ -35,175 +39,21 @@ $db = $pdo->open();
                     <h1 class="page-header">VOTRE PANIER</h1>
                     <div>
                         <div>
-                        <table>
-                            <thead>
-                                <th></th>
-                                <th>Nom</th>
-                                <th>Prix</th>
-                                <th width="20%">Quantité</th>
-                                <th>Total</th>
-                            </thead>
-                            <tbody id="tbody">
-                            </tbody>
-                        </table>
+                        <table class="show-cart table">
+                            
+						</table>
+						<div>Coût total: <span class="total-cart"></span>€</div>
                         </div>
                     </div>
-                    <?php
-                        if(isset($_SESSION['user'])){
-                            echo "
-                                <div id='paypal-button'></div>
-                            ";
-                        }
-                    ?>
+        			<button type="button" class="btn btn-primary">Commander</button>
                 </div>
             </div>
             </section>
-            
         </div>
         </div>
         <?php $pdo->close(); ?>
     </div>
-    <?php include 'includes/scripts.js'; ?>
-<script>
-var total = 0;
-$(function(){
-	$(document).on('click', '.cart_delete', function(e){
-		e.preventDefault();
-		var id = $(this).data('id');
-		$.ajax({
-			type: 'POST',
-			url: 'cart_delete.php',
-			data: {id:id},
-			dataType: 'json',
-			success: function(response){
-				if(!response.error){
-					getDetails();
-					getCart();
-					getTotal();
-				}
-			}
-		});
-	});
-
-	$(document).on('click', '.minus', function(e){
-		e.preventDefault();
-		var id = $(this).data('id');
-		var qty = $('#qty_'+id).val();
-		if(qty>1){
-			qty--;
-		}
-		$('#qty_'+id).val(qty);
-		$.ajax({
-			type: 'POST',
-			url: 'cart_update.php',
-			data: {
-				id: id,
-				qty: qty,
-			},
-			dataType: 'json',
-			success: function(response){
-				if(!response.error){
-					getDetails();
-					getCart();
-					getTotal();
-				}
-			}
-		});
-	});
-
-	$(document).on('click', '.add', function(e){
-		e.preventDefault();
-		var id = $(this).data('id');
-		var qty = $('#qty_'+id).val();
-		qty++;
-		$('#qty_'+id).val(qty);
-		$.ajax({
-			type: 'POST',
-			url: 'cart_update.php',
-			data: {
-				id: id,
-				qty: qty,
-			},
-			dataType: 'json',
-			success: function(response){
-				if(!response.error){
-					getDetails();
-					getCart();
-					getTotal();
-				}
-			}
-		});
-	});
-
-	getDetails();
-	getTotal();
-
-});
-
-function getDetails(){
-	$.ajax({
-		type: 'POST',
-		url: 'cart_details.php',
-		dataType: 'json',
-		success: function(response){
-			$('#tbody').html(response);
-			getCart();
-		}
-	});
-}
-
-function getTotal(){
-	$.ajax({
-		type: 'POST',
-		url: 'cart_total.php',
-		dataType: 'json',
-		success:function(response){
-			total = response;
-		}
-	});
-}
-</script>
-<!-- Paypal Express -->
-<script>
-paypal.Button.render({
-    env: 'sandbox', // change for production if app is live,
-
-	client: {
-        sandbox:    'ASb1ZbVxG5ZFzCWLdYLi_d1-k5rmSjvBZhxP2etCxBKXaJHxPba13JJD_D3dTNriRbAv3Kp_72cgDvaZ',
-        //production: 'AaBHKJFEej4V6yaArjzSx9cuf-UYesQYKqynQVCdBlKuZKawDDzFyuQdidPOBSGEhWaNQnnvfzuFB9SM'
-    },
-
-    commit: true, // Show a 'Pay Now' button
-
-    style: {
-    	color: 'gold',
-    	size: 'small'
-    },
-
-    payment: function(data, actions) {
-        return actions.payment.create({
-            payment: {
-                transactions: [
-                    {
-                    	//total purchase
-                        amount: { 
-                        	total: total, 
-                        	currency: 'USD' 
-                        }
-                    }
-                ]
-            }
-        });
-    },
-
-    onAuthorize: function(data, actions) {
-        return actions.payment.execute().then(function(payment) {
-			window.location = 'sales.php?pay='+payment.id;
-        });
-    },
-
-}, '#paypal-button');
-</script>
 <?php include 'includes/footer.php';?>
+<script src="script/main.js"></script>
 </body>
 </html>
